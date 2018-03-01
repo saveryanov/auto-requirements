@@ -1,0 +1,28 @@
+{
+  "name": "auto-requirements",
+  "version": "0.9.0",
+  "description": "Утилита для сканирования всех файлов в текущей директории и установке найденных зависимостей (require()) с помощью npm.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saveryanov/auto-requirements.git"
+  },
+  "author": "Sergey Averyanov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saveryanov/auto-requirements/issues"
+  },
+  "homepage": "https://github.com/saveryanov/auto-requirements#readme",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "colors": "^1.1.2",
+    "detective": "^5.1.0",
+    "findit": "^2.0.0",
+    "fs": "0.0.1-security",
+    "optimist": "^0.6.1",
+    "path": "^0.12.7"
+  }
+}
