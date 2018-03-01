@@ -31,10 +31,10 @@ node ../auto-requirements/main.js --no_install
 Для удобства использования Вы можете добавить в ~/.bash_profile строку вроде этой:
 
 ```
-npm_auto() { node /Users/backend/dev/auto-requirements/main.js $1 $2; }
+npm_auto() { node /Users/%username%/auto-requirements/main.js $1 $2; }
 ```
 
-Таким образом запуск будет выглядеть следующим образом:
+Таким образом запуск из любой директории будет выглядеть следующим образом:
 
 ```
 npm_auto --path=../app-dir/ --no_install
