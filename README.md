@@ -2,7 +2,7 @@
 
 Утилита для сканирования всех файлов в текущей директории и установке найденных зависимостей (require()) с помощью npm.
 
-## Пример запуска
+## Примеры
 
 Перед запуском установите зависимости с помощью:
 
@@ -26,4 +26,16 @@ node ../auto-requirements/main.js --path=../app-dir/
 
 ```
 node ../auto-requirements/main.js --no_install
+```
+
+Для удобства использования Вы можете добавить в ~/.bash_profile строку вроде этой:
+
+```
+npm_auto() { node /Users/backend/dev/auto-requirements/main.js $1 $2; }
+```
+
+Таким образом запуск будет выглядеть следующим образом:
+
+```
+npm_auto --path=../app-dir/ --no_install
 ```
