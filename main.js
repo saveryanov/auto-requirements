@@ -25,10 +25,16 @@ findit.on('directory', function (dir, stat, stop) {
 });
 
 findit.on('file', function (file/*, stat */) {
-    var src = fs.readFileSync(file);
-    var fileRequires = detective(src).filter(req => req.match(/^\./i) == null);
-    for (let req of fileRequires) {
-        requires[req] = true;
+    try {
+        if (path.parse(file).ext != '.js') return;
+        var src = fs.readFileSync(file);
+        var fileRequires = detective(src).filter(req => req.match(/^\./i) == null);
+        for (let req of fileRequires) {
+            requires[req] = true;
+        }
+    } catch (e) {
+        console.error(`Error occured with file: ${file}`.red)
+        console.error(e);
     }
 });
 
