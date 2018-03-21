@@ -14,7 +14,7 @@ colors.setTheme({
 var argv = optimist.argv;
 var findPath = path.join(process.env.PWD, argv.path || '.');
 var isInstall = argv.no_install === undefined;
-var isUninstall = argv.clear_unused === undefined;
+var isUninstall = argv.no_uninstall === undefined;
 
 console.log("Find requirements in: " + findPath.link);
 var findit = require('findit')(findPath);
