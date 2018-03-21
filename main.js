@@ -64,7 +64,7 @@ findit.on('end', function () {
             console.log("* " + req.green + " (" + `npm install ${req} --save`.grey + ")");
         });
     } else {
-        console.log("Nothing to install");
+        console.log("Nothing to install".green);
     }
 
 
@@ -78,7 +78,7 @@ findit.on('end', function () {
             console.log("* " + req.red + " (" + `npm uninstall ${req} --save`.grey + ")");
         });
     } else {
-        console.log("No unused dependencies");
+        console.log("No unused dependencies".green);
     }
 
 
