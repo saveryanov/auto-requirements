@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var optimist = require("optimist");
 var path = require("path");
 var detective = require("detective");

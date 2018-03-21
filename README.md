@@ -1,41 +1,25 @@
 # auto-requirements
 
-Утилита для сканирования всех файлов в текущей директории и установке найденных зависимостей (require()) с помощью npm.
+Autoreq is a program that allows to search in current directory all requirement packages and install them via npm.
 
-## Примеры
+## Install
 
-Перед запуском установите зависимости с помощью:
-
-```
-npm install
-```
-
-Сканирование текущей директории и установка всех зависимостей:
+You can install it by npm:
 
 ```
-node ../auto-requirements/main.js
+npm install -g auto-requirements
 ```
 
-Если требуется указать иную директорию вместо текущей, то используйте опцию --path, указав путь относительно текущей директории:
+## Usage
+
+Scan current directory and installing all packages:
 
 ```
-node ../auto-requirements/main.js --path=../app-dir/
+autoreq
 ```
 
-Имеется возможность вывода на экран всех зависимостей без их установки (опция --no_install)
+If you don't want to install packages and only need to display list use --no_install param:
 
 ```
-node ../auto-requirements/main.js --no_install
-```
-
-Для удобства использования Вы можете добавить в ~/.bash_profile строку вроде этой:
-
-```
-npm_auto() { node /Users/%username%/auto-requirements/main.js $1 $2; }
-```
-
-Таким образом запуск из любой директории будет выглядеть следующим образом:
-
-```
-npm_auto --path=../app-dir/ --no_install
+autoreq --no_install
 ```
