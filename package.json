@@ -1,7 +1,7 @@
 {
   "name": "auto-requirements",
-  "version": "0.9.9-4",
-  "description": "Autoreq is a program that allows to search in current directory all requirement packages and install them via npm.",
+  "version": "0.9.9-5",
+  "description": "Autoreq is a program that allows to parse js files in current directory to find used packages and install them or uninstall unused ones.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +15,11 @@
   "bugs": {
     "url": "https://github.com/saveryanov/auto-requirements/issues"
   },
+  "keywords": [
+    "install",
+    "require",
+    "package"
+  ],
   "bin": {
     "autoreq": "./main.js"
   },
