@@ -95,7 +95,7 @@ findit.on('end', function () {
     }
 
 
-    if (toUninstall) {
+    if (isUninstall) {
         toUninstall.forEach(req => {
             exec(`npm uninstall ${req} --save`, (err, stdout/*, stderr */) => {
                 if (err) {
