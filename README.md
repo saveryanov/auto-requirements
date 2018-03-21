@@ -2,6 +2,8 @@
 
 Autoreq is a program that allows to parse js files in current directory to find used packages and install them or uninstall unused ones.
 
+It will ignore js files in node_modules folder.
+
 ## Install
 
 You can install it by npm:
