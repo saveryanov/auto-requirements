@@ -1,7 +1,7 @@
 {
   "name": "auto-requirements",
-  "version": "0.9.7",
-  "description": "Утилита для сканирования всех файлов в текущей директории и установке найденных зависимостей (require()) с помощью npm.",
+  "version": "0.9.8",
+  "description": "Autoreq is a program that allows to search in current directory all requirement packages and install them via npm.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
