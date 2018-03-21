@@ -28,5 +28,5 @@ autoreq --no_install
 If you don't want to uninstall unused packages and only need to display list use --no_uninstall param:
 
 ```
-autoreq --no_install
+autoreq --no_uninstall
 ```

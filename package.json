@@ -1,6 +1,6 @@
 {
   "name": "auto-requirements",
-  "version": "0.9.9-2",
+  "version": "0.9.9-3",
   "description": "Autoreq is a program that allows to search in current directory all requirement packages and install them via npm.",
   "main": "main.js",
   "scripts": {
