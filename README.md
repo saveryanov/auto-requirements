@@ -1,6 +1,6 @@
 # auto-requirements
 
-Autoreq is a program that allows to search in current directory all requirement packages and install them via npm.
+Autoreq is a program that allows to parse js files in current directory to find used packages and install them or uninstall unused ones.
 
 ## Install
 
