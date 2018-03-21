@@ -14,9 +14,19 @@ colors.setTheme({
 var argv = optimist.argv;
 var findPath = path.join(process.env.PWD, argv.path || '.');
 var isInstall = argv.no_install === undefined;
+var isUninstall = argv.clear_unused === undefined;
 
 console.log("Find requirements in: " + findPath.link);
 var findit = require('findit')(findPath);
+
+var packagePath = path.join(findPath, 'package.json');
+var packageDependencies = [];
+if (fs.existsSync(packagePath)) {
+    var packageParsed = require(packagePath);
+    if (packageParsed.dependencies) {
+        packageDependencies = packageParsed.dependencies;
+    }
+}
 
 var requires = {};
 
@@ -32,6 +42,7 @@ findit.on('file', function (file/*, stat */) {
         var fileRequires = detective(src).filter(req => req.match(/^\./i) == null);
         for (let req of fileRequires) {
             requires[req] = true;
+            delete packageDependencies[req];
         }
     } catch (e) {
         console.error(`Error occured with file: ${file}`.red)
@@ -40,19 +51,53 @@ findit.on('file', function (file/*, stat */) {
 });
 
 findit.on('end', function () {
-    requires = Object.keys(requires);
+    var toInstall = Object.keys(requires);
+    var toUninstall = Object.keys(packageDependencies);
     
     if (isInstall)
         console.log("Requirements will be installed: ");
     else 
         console.log("Requirements found: ");
-    requires.forEach(req => {
-        console.log("* " + req.green + " (" + `npm install ${req} --save`.grey + ")");
-    });
+    
+    if (toInstall.length) {
+        toInstall.forEach(req => {
+            console.log("* " + req.green + " (" + `npm install ${req} --save`.grey + ")");
+        });
+    } else {
+        console.log("Nothing to install");
+    }
+
+
+    if (isUninstall)
+        console.log("Unused requirements will be uninstalled: ");
+    else 
+        console.log("Unused requirements: ");
+
+    if (toUninstall.length) {
+        toUninstall.forEach(req => {
+            console.log("* " + req.red + " (" + `npm uninstall ${req} --save`.grey + ")");
+        });
+    } else {
+        console.log("No unused dependencies");
+    }
+
 
     if (isInstall) {
-        requires.forEach(req => {
+        toInstall.forEach(req => {
             exec(`npm install ${req} --save`, (err, stdout/*, stderr */) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log(stdout);
+            });
+        });
+    }
+
+
+    if (toUninstall) {
+        toUninstall.forEach(req => {
+            exec(`npm uninstall ${req} --save`, (err, stdout/*, stderr */) => {
                 if (err) {
                     console.error(err);
                     return;
