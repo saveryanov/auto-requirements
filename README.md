@@ -28,7 +28,7 @@ Install packages and only need to display list. Variations:
 
 * autoreq --no_install
 * autoreq --no-install
-* autoreq --install=false
+* autoreq --install=0
 * autoreq -ni
 
 Default: true.
@@ -39,7 +39,7 @@ Uninstall unused packages and only need to display list. Variations:
 
 * autoreq --no_uninstall
 * autoreq --no-uninstall
-* autoreq --uninstall=false
+* autoreq --uninstall=0
 * autoreq -nu
 
 Default: true.
@@ -68,7 +68,7 @@ Default: false.
 
 Use --save flag in npm install commands. Variations:
 
-* --save=false
+* --save=0
 * --no-save
 
 Default: true.
