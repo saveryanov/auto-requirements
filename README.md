@@ -1,5 +1,7 @@
 # auto-requirements
 
+[![NPM version](https://img.shields.io/npm/v/auto-requirements.svg)](https://www.npmjs.com/package/auto-requirements)
+
 Autoreq is a command line utility that allows to parse js files in current directory to find used packages and install them or uninstall unused ones.
 
 It will ignore js files in node_modules folder.
