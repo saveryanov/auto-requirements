@@ -64,11 +64,13 @@ Use --save-exact flag in npm install commands. Variations:
 
 Default: false.
 
-### save
+### no-save
 
-Use --save flag in npm install commands. Variations:
+Use --save/--no-save flag in npm install commands. Variations:
 
 * --save=0
+* --save=1
 * --no-save
+* --save
 
 Default: true.
