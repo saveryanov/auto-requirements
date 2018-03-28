@@ -1,7 +1,7 @@
 {
   "name": "auto-requirements",
-  "version": "1.0.5",
-  "description": "Autoreq is a program that allows to parse js files in current directory to find used packages and install them or uninstall unused ones.",
+  "version": "1.0.5-1",
+  "description": "Autoreq is a command line utility that allows to parse js files in current directory to find used packages and install them or uninstall unused ones.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
