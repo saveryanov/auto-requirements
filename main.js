@@ -29,8 +29,8 @@ controllers.parser
             toInstall.forEach(req => {
                 let command = `npm install ${req}` +
                     (params.installExact && results.install[req].packageVersion && results.install[req].packageVersion[0] !== '^' ? `@${results.install[req].packageVersion}`: "") +
-                    `${params.save ? " --save" : ""}` + 
-                    `${params.saveExact ? " --save-exact" : "--no-save"}`;
+                    `${params.save ? " --save" : " --no-save"}` + 
+                    `${params.saveExact ? " --save-exact" : ""}`;
     
                 if (params.isInstall) {
                     commands.push(command);
@@ -58,7 +58,7 @@ controllers.parser
             let tableData = [];
             toUninstall.forEach(req => {
                 let command = `npm uninstall ${req}` +
-                    `${params.save ? " --save" : "--no-save"}`;
+                    `${params.save ? " --save" : " --no-save"}`;
     
                 if (params.isUninstall) {
                     commands.push(command);
