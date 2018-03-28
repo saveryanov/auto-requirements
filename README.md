@@ -22,7 +22,7 @@ autoreq
 
 ## Params
 
-###no_install
+### no_install
 
 Install packages and only need to display list. Variations: 
 
@@ -33,7 +33,7 @@ Install packages and only need to display list. Variations:
 
 Default: true.
 
-###no_uninstall
+### no_uninstall
 
 Uninstall unused packages and only need to display list. Variations: 
 
@@ -44,7 +44,7 @@ Uninstall unused packages and only need to display list. Variations:
 
 Default: true.
 
-###install_exact
+### install_exact
 
 Install exact version from package.json if version saved there as exact (for example 1.0.2, not ^1.0.0). Variations:
 
@@ -54,7 +54,7 @@ Install exact version from package.json if version saved there as exact (for exa
 
 Default: false.
 
-###save_exact
+### save_exact
 
 Use --save-exact flag in npm install commands. Variations:
 
@@ -64,7 +64,7 @@ Use --save-exact flag in npm install commands. Variations:
 
 Default: false.
 
-###save
+### save
 
 Use --save flag in npm install commands. Variations:
 
