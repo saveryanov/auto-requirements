@@ -28,7 +28,7 @@ Aliases:
 
 ## Params
 
-### no_install
+### --no_install
 
 Install packages and only need to display list. Variations: 
 
@@ -39,7 +39,7 @@ Install packages and only need to display list. Variations:
 
 Default: true.
 
-### no_uninstall
+### --no_uninstall
 
 Uninstall unused packages and only need to display list. Variations: 
 
@@ -50,7 +50,7 @@ Uninstall unused packages and only need to display list. Variations:
 
 Default: true.
 
-### install_exact
+### --install_exact
 
 If package.json has exact version of package, then install it. Save property will be added only if this package isn't in package.json.
 
@@ -60,7 +60,7 @@ If package.json has exact version of package, then install it. Save property wil
 
 Default: false.
 
-### save_exact
+### --save_exact
 
 Use --save-exact flag in npm install commands. Variations:
 
@@ -70,13 +70,19 @@ Use --save-exact flag in npm install commands. Variations:
 
 Default: false.
 
-### no-save
+### --no_save
 
-Use --save/--no-save flag in npm install commands. Variations:
+Use --save/--no-save flag in npm install commands.
+
+Variations for --no-save: 
 
 * --save=0
-* --save=1
 * --no-save
+* --no_save
+
+Variations for --save: 
+
+* --save=1
 * --save
 
 Default: true.

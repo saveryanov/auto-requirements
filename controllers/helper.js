@@ -37,10 +37,12 @@ module.exports.generateParams = function(argv = optimist.argv) {
 
     // save
     params.save = true;
-    if (argv.save !== undefined) {
-        params.save = argv.save ? true : false;
+    if (argv['save'] !== undefined) {
+        params.save = argv['save'] ? true : false;
     }
-
+    if (argv['no_save'] !== undefined) {
+        params.save = argv['no_save'] ? false : true;
+    }
 
     // install exact
     params.installExact = false;
