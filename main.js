@@ -27,9 +27,11 @@ controllers.parser
         if (toInstall.length) {
             let tableData = [];
             toInstall.forEach(req => {
+                let isSetExact = results.install[req].packageVersion && results.install[req].packageVersion[0] !== '^';
+                let isInstallExact = params.installExact && isSetExact;
                 let command = `npm install ${req}` +
-                    (params.installExact && results.install[req].packageVersion && results.install[req].packageVersion[0] !== '^' ? `@${results.install[req].packageVersion}`: "") +
-                    `${params.save ? " --save" : " --no-save"}` + 
+                    (isInstallExact ? `@${results.install[req].packageVersion}`: "") +
+                    `${params.save && (params.installExact && !results.install[req].packageVersion)  ? " --save" : " --no-save"}` + 
                     `${params.saveExact ? " --save-exact" : ""}`;
     
                 if (params.isInstall) {

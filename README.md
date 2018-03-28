@@ -46,7 +46,7 @@ Default: true.
 
 ### install_exact
 
-Install exact version from package.json if version saved there as exact (for example 1.0.2, not ^1.0.0). Variations:
+If package.json has exact version of package, then install it. Save property will be added only if this package isn't in package.json.
 
 * --install_exact
 * --install-exact
