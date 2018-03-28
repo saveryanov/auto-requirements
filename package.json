@@ -1,6 +1,6 @@
 {
   "name": "auto-requirements",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Autoreq is a command line utility that allows to parse js files in current directory to find used packages and install them or uninstall unused ones.",
   "main": "main.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/saveryanov/auto-requirements.git"
   },
   "author": "Sergey Averyanov",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/saveryanov/auto-requirements/issues"
   },
@@ -33,13 +33,10 @@
   },
   "homepage": "https://github.com/saveryanov/auto-requirements#readme",
   "dependencies": {
-    "child_process": "^1.0.2",
     "colors": "^1.2.1",
     "columnify": "^1.5.4",
     "detective": "^5.1.0",
     "findit": "^2.0.0",
-    "fs": "0.0.1-security",
-    "optimist": "^0.6.1",
-    "path": "^0.12.7"
+    "optimist": "^0.6.1"
   }
 }
