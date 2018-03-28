@@ -20,6 +20,12 @@ To scan current directory and installing all found packages and uninstall unused
 autoreq
 ```
 
+Aliases:
+
+* autoreq
+* a_r
+* auto_requirements
+
 ## Params
 
 ### no_install

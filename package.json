@@ -1,6 +1,6 @@
 {
   "name": "auto-requirements",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Autoreq is a program that allows to parse js files in current directory to find used packages and install them or uninstall unused ones.",
   "main": "main.js",
   "scripts": {
@@ -24,7 +24,9 @@
     "dependencies"
   ],
   "bin": {
-    "autoreq": "./main.js"
+    "autoreq": "./main.js",
+    "a_r": "./main.js",
+    "auto_requirements": "./main.js"
   },
   "engines": {
     "node": ">=0.5.0"
