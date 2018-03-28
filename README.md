@@ -29,7 +29,7 @@ Install packages and only need to display list. Variations:
 * autoreq --no_install
 * autoreq --no-install
 * autoreq --install=0
-* autoreq -ni
+* autoreq --ni
 
 Default: true.
 
@@ -40,7 +40,7 @@ Uninstall unused packages and only need to display list. Variations:
 * autoreq --no_uninstall
 * autoreq --no-uninstall
 * autoreq --uninstall=0
-* autoreq -nu
+* autoreq --nu
 
 Default: true.
 
@@ -50,7 +50,7 @@ Install exact version from package.json if version saved there as exact (for exa
 
 * --install_exact
 * --install-exact
-* -ie
+* --ie
 
 Default: false.
 
@@ -60,7 +60,7 @@ Use --save-exact flag in npm install commands. Variations:
 
 * --save_exact
 * --save-exact
-* -E
+* --E
 
 Default: false.
 
