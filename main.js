@@ -1,109 +1,89 @@
 #!/usr/bin/env node
-var optimist = require("optimist");
-var path = require("path");
-var detective = require("detective");
-var fs = require("fs");
-var colors = require("colors");
-var { exec } = require("child_process");
-
+var controllers = require("./controllers"),
+    colors = require("colors"),
+    columnify = require('columnify');
 
 colors.setTheme({
     link: ['cyan', 'underline'],
 });
 
-var argv = optimist.argv;
-var findPath = path.join(process.env.PWD, argv.path || '.');
-var isInstall = argv.no_install === undefined;
-var isUninstall = argv.no_uninstall === undefined;
+var params = controllers.helper.generateParams();
 
-console.log("Find requirements in: " + findPath.link);
-var findit = require('findit')(findPath);
+console.log("Check requirements in: ".bold + params.findPath.link);
 
-var packagePath = path.join(findPath, 'package.json');
-var packageDependencies = [];
-if (fs.existsSync(packagePath)) {
-    var packageParsed = require(packagePath);
-    if (packageParsed.dependencies) {
-        packageDependencies = packageParsed.dependencies;
-    }
-}
-
-var requires = {};
-
-findit.on('directory', function (dir, stat, stop) {
-    var base = path.basename(dir);
-    if (base === '.git' || base === 'node_modules') stop();
-});
-
-findit.on('file', function (file/*, stat */) {
-    try {
-        if (path.parse(file).ext != '.js') return;
-        var src = fs.readFileSync(file);
-        var fileRequires = detective(src).filter(req => req.match(/^\./i) == null);
-        for (let req of fileRequires) {
-            requires[req] = true;
-            delete packageDependencies[req];
+controllers.parser
+    .parse(params)
+    .then(results => {
+        var toInstall = Object.keys(results.install);
+        var toUninstall = Object.keys(results.uninstall);
+        var commands = [];
+    
+        if (params.isInstall) {
+            console.log("\nRequirements will be installed: ".bold);
+        } else {
+            console.log("\nRequirements found: ".bold);
         }
-    } catch (e) {
-        console.error(`Error occured with file: ${file}`.red)
+        
+        if (toInstall.length) {
+            let tableData = [];
+            toInstall.forEach(req => {
+                let command = `npm install ${req}` +
+                    (params.installExact && results.install[req].packageVersion && results.install[req].packageVersion[0] !== '^' ? `@${results.install[req].packageVersion}`: "") +
+                    `${params.save ? " --save" : ""}` + 
+                    `${params.saveExact ? " --save-exact" : ""}`;
+    
+                if (params.isInstall) {
+                    commands.push(command);
+                }
+    
+                tableData.push({
+                    'module': req.green.bold,
+                    'used': results.install[req].occurrences.toString().black,
+                    'version': (results.install[req].packageVersion ? results.install[req].packageVersion.green : " no ".red),
+                    'command': command.grey
+                });
+            });
+            console.log(columnify(tableData));
+        } else {
+            console.log("Nothing to install".green);
+        }
+    
+    
+        if (params.isUninstall) {
+            console.log("\nUnused requirements will be uninstalled: ".bold);
+        } else { 
+            console.log("\nUnused requirements: ".bold);
+        }
+        if (toUninstall.length) {
+            let tableData = [];
+            toUninstall.forEach(req => {
+                let command = `npm uninstall ${req}` +
+                    `${params.save ? " --save" : ""}`;
+    
+                if (params.isUninstall) {
+                    commands.push(command);
+                }
+    
+                tableData.push({
+                    'module': req.red.bold,
+                    'command': command.grey
+                });
+            });
+            console.log(columnify(tableData));
+        } else {
+            console.log("No unused dependencies".green);
+        }
+        
+        if (commands.length) {
+            console.log('\nProcessing commands. Please wait...');
+            return controllers.executioner.exec(commands);
+        } 
+        return new Promise(r => r());
+    })
+    .then(() => {
+        console.log("\nAll done.".green);
+    })
+    .catch(e => {
         console.error(e);
-    }
-});
-
-findit.on('end', function () {
-    var toInstall = Object.keys(requires);
-    var toUninstall = Object.keys(packageDependencies);
-    
-    if (isInstall)
-        console.log("Requirements will be installed: ");
-    else 
-        console.log("Requirements found: ");
-    
-    if (toInstall.length) {
-        toInstall.forEach(req => {
-            console.log("* " + req.green + " (" + `npm install ${req} --save`.grey + ")");
-        });
-    } else {
-        console.log("Nothing to install".green);
-    }
-
-
-    if (isUninstall)
-        console.log("Unused requirements will be uninstalled: ");
-    else 
-        console.log("Unused requirements: ");
-
-    if (toUninstall.length) {
-        toUninstall.forEach(req => {
-            console.log("* " + req.red + " (" + `npm uninstall ${req} --save`.grey + ")");
-        });
-    } else {
-        console.log("No unused dependencies".green);
-    }
-
-
-    if (isInstall) {
-        toInstall.forEach(req => {
-            exec(`npm install ${req} --save`, (err, stdout/*, stderr */) => {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                console.log(stdout);
-            });
-        });
-    }
-
-
-    if (isUninstall) {
-        toUninstall.forEach(req => {
-            exec(`npm uninstall ${req} --save`, (err, stdout/*, stderr */) => {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                console.log(stdout);
-            });
-        });
-    }
-})
+        console.log("Ended with errors.".red);
+    });

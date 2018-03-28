@@ -14,21 +14,61 @@ npm install -g auto-requirements
 
 ## Usage
 
-Scan current directory and installing all found packages and uninstall unused dependencies:
+To scan current directory and installing all found packages and uninstall unused dependencies execute this in command line:
 
 ```
 autoreq
 ```
 
-If you don't want to install packages and only need to display list use --no_install param:
+### Params
 
-```
-autoreq --no_install
-```
+**no_install**
 
+Install packages and only need to display list. Variations: 
 
-If you don't want to uninstall unused packages and only need to display list use --no_uninstall param:
+* autoreq --no_install
+* autoreq --no-install
+* autoreq --install=false
+* autoreq -ni
 
-```
-autoreq --no_uninstall
-```
+Default: true.
+
+**no_uninstall**
+
+Uninstall unused packages and only need to display list. Variations: 
+
+* autoreq --no_uninstall
+* autoreq --no-uninstall
+* autoreq --uninstall=false
+* autoreq -nu
+
+Default: true.
+
+**install_exact**
+
+Install exact version from package.json if version saved there as exact (for example 1.0.2, not ^1.0.0). Variations:
+
+* --install_exact
+* --install-exact
+* -ie
+
+Default: false.
+
+**save_exact**
+
+Use --save-exact flag in npm install commands. Variations:
+
+* --save_exact
+* --save-exact
+* -E
+
+Default: false.
+
+**save**
+
+Use --save flag in npm install commands. Variations:
+
+* --save=false
+* --no-save
+
+Default: true.
