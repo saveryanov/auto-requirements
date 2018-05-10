@@ -6,7 +6,7 @@ Autoreq is a command line utility that allows to parse js files in current direc
 
 It will ignore js files in node_modules folder.
 
-![auto-requirements self execution example](https://raw.githubusercontent.com/saveryanov/auto-requirements/blob/master/examples/exec-result.png?raw=true)
+![auto-requirements self execution example](https://github.com/saveryanov/auto-requirements/blob/master/examples/exec-result.png?raw=true)
 
 ## Install
 
