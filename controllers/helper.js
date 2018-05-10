@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 var path = require("path"),
     optimist = require("optimist"),
-    { exec } = require("child_process");
+    { exec } = require("child_process"),
+    builtinLibs = require('repl')._builtinLibs;
+    
+require("colors")
 
 module.exports.exec = function (command) {
     return new Promise((resolve, reject) => {
@@ -10,10 +13,14 @@ module.exports.exec = function (command) {
                 reject(err);
                 return;
             }
-            console.log(stdout);
+            console.log(stdout.grey);
             resolve(stdout);
         });
     });
+}
+
+module.exports.isBuiltinLib = function(moduleName) {
+    return builtinLibs.indexOf(moduleName) !== -1;
 }
 
 module.exports.generateParams = function(argv = optimist.argv) {
@@ -23,37 +30,12 @@ module.exports.generateParams = function(argv = optimist.argv) {
     params.findPath = path.join(process.env.PWD, argv['path'] || '.');
     params.packagePath = path.join(params.findPath, 'package.json');
 
-    // save exact
-    params.saveExact = false;
-    if (argv['save_exact'] !== undefined) {
-        params.saveExact = argv['save_exact'] ? true : false;
-    }
-    if (argv['save-exact'] !== undefined) {
-        params.saveExact = argv['save-exact'] ? true : false;
-    }
-    if (argv['E'] !== undefined) {
-        params.saveExact = argv['E'] ? true : false;
-    }
-
     // save
-    params.save = true;
     if (argv['save'] !== undefined) {
         params.save = argv['save'] ? true : false;
     }
     if (argv['no_save'] !== undefined) {
         params.save = argv['no_save'] ? false : true;
-    }
-
-    // install exact
-    params.installExact = false;
-    if (argv['install_exact'] !== undefined) {
-        params.installExact = argv['install_exact'] ? true : false;
-    }
-    if (argv['install-exact'] !== undefined) {
-        params.installExact = argv['install-exact'] ? true : false;
-    }
-    if (argv['ie'] !== undefined) {
-        params.installExact = argv['ie'] ? true : false;
     }
 
     // install

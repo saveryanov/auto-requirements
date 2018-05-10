@@ -27,21 +27,40 @@ controllers.parser
         if (toInstall.length) {
             let tableData = [];
             toInstall.forEach(req => {
-                let isSetExact = results.install[req].packageVersion && results.install[req].packageVersion[0] !== '^';
-                let isInstallExact = params.installExact && isSetExact;
-                let command = `npm install ${req}` +
-                    (isInstallExact ? `@${results.install[req].packageVersion}`: "") +
-                    `${params.save && (params.installExact && !results.install[req].packageVersion)  ? " --save" : " --no-save"}` + 
-                    `${params.saveExact ? " --save-exact" : ""}`;
+                if (controllers.helper.isBuiltinLib(req)) return;
+
+                let packageVersion = results.install[req].packageVersion ? results.install[req].packageVersion : results.install[req].packageDevVersion;
+                let isInPackage = packageVersion ? true : false;
+                let isInPackageDev = results.install[req].packageDevVersion && !results.install[req].packageVersion ? true : false;
+                let inPackageExact = packageVersion && packageVersion[0] !== '^';
+
+                let command = `npm install ${req}`;
+
+                if (inPackageExact) {
+                    command += `@${packageVersion}`;
+                }
+                if (params.save !== undefined) {
+                    if (params.save) {
+                        command += isInPackageDev ? " --save-dev" : " --save";
+                    } else {
+                        command += " --no-save";
+                    }
+                } else {
+                    if (isInPackage) {
+                        command += " --no-save";
+                    } else {
+                        command += isInPackageDev ? " --save-dev" : " --save";
+                    }
+                }
     
                 if (params.isInstall) {
                     commands.push(command);
                 }
-    
+                let packageVersionString = `${packageVersion}${isInPackageDev ? ' (dev)' : ''}`;
                 tableData.push({
                     'module': req.green.bold,
                     'used': results.install[req].occurrences.toString().black,
-                    'version': (results.install[req].packageVersion ? results.install[req].packageVersion.green : " no ".red),
+                    'version': (isInPackage ? packageVersionString.green : " no ".red),
                     'command': command.grey
                 });
             });
@@ -59,8 +78,14 @@ controllers.parser
         if (toUninstall.length) {
             let tableData = [];
             toUninstall.forEach(req => {
-                let command = `npm uninstall ${req}` +
-                    `${params.save ? " --save" : " --no-save"}`;
+                if (controllers.helper.isBuiltinLib(req)) return;
+                
+                let command = `npm uninstall ${req}`;
+                if (params.save !== undefined) {
+                    command += params.save ? " --save" : " --no-save";
+                } else {
+                    command += " --save";
+                }
     
                 if (params.isUninstall) {
                     commands.push(command);

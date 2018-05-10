@@ -6,11 +6,13 @@ Autoreq is a command line utility that allows to parse js files in current direc
 
 It will ignore js files in node_modules folder.
 
+![alt example](https://raw.githubusercontent.com/saveryanov/auto-requirements/master/examples/result.png)
+
 ## Install
 
 You can install it by npm:
 
-```
+```commandline
 npm install -g auto-requirements
 ```
 
@@ -18,7 +20,7 @@ npm install -g auto-requirements
 
 To scan current directory and installing all found packages and uninstall unused dependencies execute this in command line:
 
-```
+```commandline
 autoreq
 ```
 
@@ -30,61 +32,43 @@ Aliases:
 
 ## Params
 
-### --no_install
+### --no-install
 
-Install packages and only need to display list. Variations: 
+Install packages and only need to display list. Variations:
 
 * autoreq --no_install
 * autoreq --no-install
 * autoreq --install=0
 * autoreq --ni
 
-Default: true.
+Default: execute all install commands.
 
-### --no_uninstall
+### --no-uninstall
 
-Uninstall unused packages and only need to display list. Variations: 
+Uninstall unused packages and only need to display list. Variations:
 
 * autoreq --no_uninstall
 * autoreq --no-uninstall
 * autoreq --uninstall=0
 * autoreq --nu
 
-Default: true.
+Default: execute all uninstall commands.
 
-### --install_exact
-
-If package.json has exact version of package, then install it. Save property will be added only if this package isn't in package.json.
-
-* --install_exact
-* --install-exact
-* --ie
-
-Default: false.
-
-### --save_exact
-
-Use --save-exact flag in npm install commands. Variations:
-
-* --save_exact
-* --save-exact
-* --E
-
-Default: false.
-
-### --no_save
+### --save, --no-save
 
 Use --save/--no-save flag in npm install commands.
 
-Variations for --no-save: 
+Variations for --no-save:
 
-* --save=0
-* --no-save
-* --no_save
+* autoreq --save=0
+* autoreq --no-save
+* autoreq --no_save
 
-Variations for --save: 
+Variations for --save:
 
-* --save=1
-* --save
+* autoreq --save=1
+* autoreq --save
 
-Default: true.
+Default: save all packages that isn't in package.
+
+If save flag set and there is package installed as dev dependency then *--save-dev* flag will be added.

@@ -14,6 +14,17 @@ function getPackageDependencies(params) {
     return packageDependencies;
 }
 
+function getPackageDevDependencies(params) {
+    var packageDevDependencies = {};
+    if (fs.existsSync(params.packagePath)) {
+        var packageParsed = require(params.packagePath);
+        if (packageParsed.devDependencies) {
+            packageDevDependencies = packageParsed.devDependencies;
+        }
+    }
+    return packageDevDependencies;
+}
+
 module.exports.parse = function(params) {
 
     return new Promise((resolve, reject) => {
@@ -21,6 +32,7 @@ module.exports.parse = function(params) {
         var installPackages = {};
 
         var packageDependencies = getPackageDependencies(params);
+        var packageDevDependencies = getPackageDevDependencies(params);
         var uninstallPackages = Object.assign({}, packageDependencies);
         
         var findit = require('findit')(params.findPath);
@@ -41,6 +53,7 @@ module.exports.parse = function(params) {
                         installPackages[req] = { 
                             name: req, 
                             packageVersion: packageDependencies[req] ? packageDependencies[req] : null,
+                            packageDevVersion: packageDevDependencies[req] ? packageDevDependencies[req] : null,
                             occurrences: 1
                         };
                     } else {    // increment counter
