@@ -27,15 +27,15 @@ controllers.parser
         if (toInstall.length) {
             let tableData = [];
             toInstall.forEach(req => {
-                if (controllers.helper.isBuiltinLib(req)) return;
 
+                
                 let packageVersion = results.install[req].packageVersion ? results.install[req].packageVersion : results.install[req].packageDevVersion;
                 let isInPackage = packageVersion ? true : false;
                 let isInPackageDev = results.install[req].packageDevVersion && !results.install[req].packageVersion ? true : false;
                 let inPackageExact = packageVersion && packageVersion[0] !== '^';
 
                 let command = `npm install ${req}`;
-
+                
                 if (inPackageExact) {
                     command += `@${packageVersion}`;
                 }
@@ -54,14 +54,17 @@ controllers.parser
                 }
     
                 if (params.isInstall) {
-                    commands.push(command);
+                    if (!controllers.helper.isBuiltinLib(req)) {
+                        commands.push(command);
+                    }
                 }
                 let packageVersionString = `${packageVersion}${isInPackageDev ? ' (dev)' : ''}`;
                 tableData.push({
                     'module': req.green.bold,
                     'used': results.install[req].occurrences.toString().black,
-                    'version': (isInPackage ? packageVersionString.green : " no ".red),
-                    'command': command.grey
+                    'version': (isInPackage ? packageVersionString.green : controllers.helper.isBuiltinLib(req) ? " no ".green : " no ".red),
+                    'command': controllers.helper.isBuiltinLib(req) ? command.grey.dim : command.grey,
+                    'comment': controllers.helper.isBuiltinLib(req) ? 'built-in module'.yellow : ''
                 });
             });
             console.log(columnify(tableData));
@@ -77,9 +80,7 @@ controllers.parser
         }
         if (toUninstall.length) {
             let tableData = [];
-            toUninstall.forEach(req => {
-                if (controllers.helper.isBuiltinLib(req)) return;
-                
+            toUninstall.forEach(req => {                
                 let command = `npm uninstall ${req}`;
                 if (params.save !== undefined) {
                     command += params.save ? " --save" : " --no-save";
@@ -93,7 +94,8 @@ controllers.parser
     
                 tableData.push({
                     'module': req.red.bold,
-                    'command': command.grey
+                    'command': command.grey,
+                    'comment': controllers.helper.isBuiltinLib(req) ? 'built-in module'.yellow : ''
                 });
             });
             console.log(columnify(tableData));
