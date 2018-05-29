@@ -21,54 +21,60 @@ npm install -g auto-requirements
 To scan current directory and installing all found packages and uninstall unused dependencies execute this in command line:
 
 ```commandline
-autoreq
+autoreq --install --uninstall
 ```
 
 Aliases:
 
-* autoreq
-* a_r
-* auto_requirements
+* *autoreq*
+* *a_r*
+* *auto_requirements*
 
 ## Params
 
-### --no-install
+### --install
 
-Install packages and only need to display list. Variations:
+Execute all install commands from table. By default it will **not** execute all install commands.
 
-* autoreq --no_install
-* autoreq --no-install
-* autoreq --install=0
-* autoreq --ni
+No install variations:
 
-Default: execute all install commands.
+* *autoreq --no_install*
+* *autoreq --no-install*
+* *autoreq --install=0*
+* *autoreq -ni*
 
-### --no-uninstall
+Install variations:
 
-Uninstall unused packages and only need to display list. Variations:
+* *autoreq --install*
+* *autoreq -i*
 
-* autoreq --no_uninstall
-* autoreq --no-uninstall
-* autoreq --uninstall=0
-* autoreq --nu
+### --uninstall
 
-Default: execute all uninstall commands.
+Execute all uninstall commands from table. By default it will **not** execute all uninstall commands.
+
+No install variations:
+
+* *autoreq --no_uninstall*
+* *autoreq --no-uninstall*
+* *autoreq --uninstall=0*
+* *autoreq -nu*
+
+Install variations:
+
+* *autoreq --uninstall*
+* *autoreq -u*
 
 ### --save, --no-save
 
-Use --save/--no-save flag in npm install commands.
+Use --save/--no-save flag in npm install commands. By default it will save all packages that isn't in package (and --save-dev for devDependencies).
 
-Variations for --no-save:
+Variations for no-save:
 
-* autoreq --save=0
-* autoreq --no-save
-* autoreq --no_save
+* *autoreq --save=0*
+* *autoreq --no-save*
+* *autoreq --no_save*
 
-Variations for --save:
+Variations for save:
 
-* autoreq --save=1
-* autoreq --save
-
-Default: save all packages that isn't in package.
-
-If save flag set and there is package installed as dev dependency then *--save-dev* flag will be added.
+* *autoreq --save=1*
+* *autoreq --save*

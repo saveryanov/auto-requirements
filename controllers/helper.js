@@ -39,7 +39,7 @@ module.exports.generateParams = function(argv = optimist.argv) {
     }
 
     // install
-    params.isInstall = true;
+    params.isInstall = false;
     if (argv['no_install'] !== undefined) {
         params.isInstall = argv['no_install'] ? false : true;
     } 
@@ -49,9 +49,12 @@ module.exports.generateParams = function(argv = optimist.argv) {
     if (argv['install'] !== undefined) {
         params.isInstall = argv['install'] ? true : false;
     }
+    if (argv['i'] !== undefined) {
+        params.isInstall = argv['i'] ? true : false;
+    }
 
     // uninstall
-    params.isUninstall = true;
+    params.isUninstall = false;
     if (argv['no_uninstall'] !== undefined) {
         params.isUninstall = argv['no_uninstall'] ? false : true;
     } 
@@ -60,6 +63,9 @@ module.exports.generateParams = function(argv = optimist.argv) {
     }
     if (argv['uninstall'] !== undefined) {
         params.isUninstall = argv['uninstall'] ? true : false;
+    }
+    if (argv['u'] !== undefined) {
+        params.isUninstall = argv['u'] ? true : false;
     }
     
     return params;
