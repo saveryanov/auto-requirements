@@ -14,8 +14,6 @@ console.log("Check requirements in: ".bold + params.findPath.link);
 controllers.parser
     .parse(params)
     .then(results => {
-        var toInstall = Object.keys(results.install);
-        var toUninstall = Object.keys(results.uninstall);
         var commands = [];
     
         if (params.isInstall) {
@@ -24,81 +22,24 @@ controllers.parser
             console.log("\nRequirements found: ".bold);
         }
         
-        if (toInstall.length) {
-            let tableData = [];
-            toInstall.forEach(req => {
-
-                
-                let packageVersion = results.install[req].packageVersion ? results.install[req].packageVersion : results.install[req].packageDevVersion;
-                let isInPackage = packageVersion ? true : false;
-                let isInPackageDev = results.install[req].packageDevVersion && !results.install[req].packageVersion ? true : false;
-                let inPackageExact = packageVersion && packageVersion[0] !== '^';
-
-                let command = `npm install ${req}`;
-                
-                if (inPackageExact) {
-                    command += `@${packageVersion}`;
-                }
-                if (params.save !== undefined) {
-                    if (params.save) {
-                        command += isInPackageDev ? " --save-dev" : " --save";
-                    } else {
-                        command += " --no-save";
-                    }
-                } else {
-                    if (isInPackage) {
-                        command += " --no-save";
-                    } else {
-                        command += isInPackageDev ? " --save-dev" : " --save";
-                    }
-                }
-    
-                if (params.isInstall) {
-                    if (!controllers.helper.isBuiltinLib(req)) {
-                        commands.push(command);
-                    }
-                }
-                let packageVersionString = `${packageVersion}${isInPackageDev ? ' (dev)' : ''}`;
-                tableData.push({
-                    'module': req.green.bold,
-                    'used': results.install[req].occurrences.toString().black,
-                    'version': (isInPackage ? packageVersionString.green : controllers.helper.isBuiltinLib(req) ? " no ".green : " no ".red),
-                    'command': controllers.helper.isBuiltinLib(req) ? command.grey.dim : command.grey,
-                    'comment': controllers.helper.isBuiltinLib(req) ? 'built-in module'.yellow : ''
-                });
-            });
-            console.log(columnify(tableData));
+        if (Object.keys(results.install).length) {
+            let installSummary = controllers.summary.install(results.install, params);
+            commands.push(... installSummary.commands);
+            console.log(columnify(installSummary.summary));
         } else {
             console.log("Nothing to install".green);
         }
-    
     
         if (params.isUninstall) {
             console.log("\nUnused requirements will be uninstalled: ".bold);
         } else { 
             console.log("\nUnused requirements: ".bold);
         }
-        if (toUninstall.length) {
-            let tableData = [];
-            toUninstall.forEach(req => {                
-                let command = `npm uninstall ${req}`;
-                if (params.save !== undefined) {
-                    command += params.save ? " --save" : " --no-save";
-                } else {
-                    command += " --save";
-                }
-    
-                if (params.isUninstall) {
-                    commands.push(command);
-                }
-    
-                tableData.push({
-                    'module': req.red.bold,
-                    'command': command.grey,
-                    'comment': controllers.helper.isBuiltinLib(req) ? 'built-in module'.yellow : ''
-                });
-            });
-            console.log(columnify(tableData));
+
+        if (Object.keys(results.uninstall).length) {            
+            let uninstallSummary = controllers.summary.uninstall(results.uninstall, params);
+            commands.push(... uninstallSummary.commands);
+            console.log(columnify(uninstallSummary.summary));
         } else {
             console.log("No unused dependencies".green);
         }
