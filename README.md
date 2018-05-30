@@ -34,14 +34,7 @@ Aliases:
 
 ### --install
 
-Execute all install commands from table. By default it will **not** execute all install commands.
-
-No install variations:
-
-* *autoreq --no_install*
-* *autoreq --no-install*
-* *autoreq --install=0*
-* *autoreq -ni*
+Execute all install commands from summary table. By default without this param it will **not** execute all install commands.
 
 Install variations:
 
@@ -50,16 +43,9 @@ Install variations:
 
 ### --uninstall
 
-Execute all uninstall commands from table. By default it will **not** execute all uninstall commands.
+Execute all uninstall commands from summary table. By default without this param it will **not** execute all uninstall commands.
 
-No install variations:
-
-* *autoreq --no_uninstall*
-* *autoreq --no-uninstall*
-* *autoreq --uninstall=0*
-* *autoreq -nu*
-
-Install variations:
+Uninstall variations:
 
 * *autoreq --uninstall*
 * *autoreq -u*
